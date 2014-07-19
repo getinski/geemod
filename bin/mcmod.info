@@ -1,0 +1,16 @@
+[
+{
+  "modid": "gmod",
+  "name": "GeeMod",
+  "description": "Cause, Gee Willickers!!!",
+  "version": "${version}",
+  "mcversion": "${mcversion}",
+  "url": "",
+  "updateUrl": "",
+  "authorList": ["Getinski, Jonesgeek"],
+  "credits": "Jonesgeek clan",
+  "logoFile": "",
+  "screenshots": [],
+  "dependencies": []
+}
+]
