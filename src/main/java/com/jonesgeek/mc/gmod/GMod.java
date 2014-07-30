@@ -5,7 +5,7 @@ import net.minecraft.item.Item;
 
 import com.jonesgeek.mc.gmod.item.GeeWillickerSword;
 import com.jonesgeek.mc.gmod.item.GrapplingHook;
-import com.jonesgeek.mc.gmod.item.MetalDetector;
+import com.jonesgeek.mc.gmod.item.OreDetector;
 import com.jonesgeek.mc.gmod.tabs.GTab;
 
 import cpw.mods.fml.common.Mod;
@@ -30,7 +30,7 @@ public class GMod {
     	
     	grapplingHook = new GrapplingHook(gTab);
     	gsword = new GeeWillickerSword(gTab);
-    	metaldetect = new MetalDetector(gTab);
+    	metaldetect = new OreDetector(gTab);
     	
     	GameRegistry.registerItem(grapplingHook, "grapplingHook");
     	GameRegistry.registerItem(gsword, "gsword");

@@ -21,17 +21,17 @@ import cpw.mods.fml.relauncher.SideOnly;
  * @author will
  *
  */
-public class MetalDetector extends Item {
+public class OreDetector extends Item {
 
-	public MetalDetector() {
+	public OreDetector() {
 		this(CreativeTabs.tabTools);
 	}
 	
-	public MetalDetector(CreativeTabs tab) {
+	public OreDetector(CreativeTabs tab) {
 		setMaxStackSize(1);
 		setFull3D();
-		setUnlocalizedName(GMod.MODID + "_" + "metaldetect");
-		setTextureName(GMod.MODID + ":" + "metaldetect");
+		setUnlocalizedName(GMod.MODID + "_" + "oredetector");
+		setTextureName(GMod.MODID + ":" + "oredetector");
 		setCreativeTab(tab);
 	}
 
