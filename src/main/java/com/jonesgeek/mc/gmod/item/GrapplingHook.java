@@ -20,6 +20,8 @@ public class GrapplingHook extends Item {
 	}
 	
 	public GrapplingHook(CreativeTabs tab) {
+		setMaxStackSize(1);
+		setFull3D();
 		setUnlocalizedName(GMod.MODID + "_" + "grapplingHook");
 		setTextureName(GMod.MODID + ":" + "grapplingHook");
 		setCreativeTab(tab);
