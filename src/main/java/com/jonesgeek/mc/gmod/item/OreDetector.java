@@ -4,7 +4,7 @@
 package com.jonesgeek.mc.gmod.item;
 
 
-import net.minecraft.creativetab.CreativeTabs;
+import net.minecraft.block.Block;
 import net.minecraft.entity.Entity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -22,17 +22,22 @@ import cpw.mods.fml.relauncher.SideOnly;
  *
  */
 public class OreDetector extends Item {
+	
+	private Block blockToDetect;
+	private int sensitivity;
 
-	public OreDetector() {
-		this(CreativeTabs.tabTools);
+	public OreDetector( ) {
+		this(null, -1);
 	}
 	
-	public OreDetector(CreativeTabs tab) {
+	public OreDetector(Block blockToDetect, int sensitivity) {
+		this.blockToDetect = blockToDetect;
+		this.sensitivity = sensitivity;
+		
 		setMaxStackSize(1);
 		setFull3D();
-		setUnlocalizedName(GMod.MODID + "_" + "oredetector");
-		setTextureName(GMod.MODID + ":" + "oredetector");
-		setCreativeTab(tab);
+		setUnlocalizedName(GMod.MODID + "_" + "oreDetector");
+		setTextureName(GMod.MODID + ":" + "oreDetector");
 	}
 
 	/* (non-Javadoc)
@@ -43,7 +48,7 @@ public class OreDetector extends Item {
 	public void onUpdate(ItemStack itemStack, World world,
 			Entity entity, int i1, boolean held) {
 		super.onUpdate(itemStack, world, entity, i1, held);
-		if(held && Mouse.isButtonDown(1)) {
+		if(held && Mouse.isButtonDown(1) && blockToDetect != null) {
 			world.playSoundAtEntity(entity, "random.bow", 1.0f, 1.0f);
 		}
 	}
