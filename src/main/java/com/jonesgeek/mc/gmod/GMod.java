@@ -49,6 +49,14 @@ public class GMod {
     	registerDetectors("emerald", Blocks.emerald_ore, Items.emerald);
     	registerDetectors("quartz", Blocks.quartz_ore, Items.quartz);
     	
+    	GameRegistry.addRecipe(new ItemStack(oreDetector, 1), new Object[]{
+    		"A ",
+    		"A ",
+    		"AB",
+    		'A', Items.stick,
+    		'B', Items.compass
+    	});
+    	
     }
     
     private void registerDetectors(String oreType, Block oreBlock, Item oreItem) {
@@ -57,8 +65,8 @@ public class GMod {
     
     private void registerDetectors(String oreType, Block oreBlock, Item oreItem, int damage) {
     	OreDetector basicDetector = registerDetector(oreType+"Detector", oreBlock, oreItem, oreDetector, 1, damage);
-    	OreDetector betterDetector = registerDetector(oreType+"DetectorBetter", oreBlock, oreItem, basicDetector, 3, damage);
-    	registerDetector(oreType+"DetectorBest", oreBlock, oreItem, betterDetector, 6, damage);
+    	OreDetector betterDetector = registerDetector(oreType+"DetectorBetter", oreBlock, oreItem, basicDetector, 2, damage);
+    	registerDetector(oreType+"DetectorBest", oreBlock, oreItem, betterDetector, 3, damage);
     }
     
     private OreDetector registerDetector(String itemName, Block oreBlock, Item oreItem, Item extendsDetector,  int sensitivity, int damage) {

@@ -25,15 +25,19 @@ import cpw.mods.fml.relauncher.SideOnly;
 public class OreDetector extends Item {
 	
 	private Block blockToDetect;
-	private int sensitivity;
+	private int depth;
+	private int radius;
 
 	public OreDetector( ) {
-		this(null, -1);
+		this(null, 1);
 	}
 	
 	public OreDetector(Block blockToDetect, int sensitivity) {
 		this.blockToDetect = blockToDetect;
-		this.sensitivity = sensitivity;
+		this.depth = sensitivity * 50;
+		this.radius = sensitivity - 1;
+		
+		super.setMaxDamage(depth);
 		
 		setMaxStackSize(1);
 		setFull3D();
@@ -50,66 +54,46 @@ public class OreDetector extends Item {
 			Entity entity, int i1, boolean held) {
 		super.onUpdate(itemStack, world, entity, i1, held);
 		if(held && Mouse.isButtonDown(1) && blockToDetect != null) {
-			Location location = new Location(entity);
 			
-			int depth = isBlockBeneath(world, location, sensitivity * 10, Block.getIdFromBlock(blockToDetect));
+			int depth = detectBlock(world, 
+					MathHelper.floor_double(entity.posX), 
+					MathHelper.floor_double(entity.posY - entity.yOffset),
+					MathHelper.floor_double(entity.posZ),
+					Block.getIdFromBlock(blockToDetect));
+			
 			if( depth > -1) {
-				System.out.println("Block that is in range: " + depth);
+				super.setDamage(itemStack, depth);
 				world.playSoundAtEntity(entity, "random.bow", 1.0f, 1.0f);
+			} else {
+				super.setDamage(itemStack, 0);
 			}
+		} else {
+			super.setDamage(itemStack, 0);
 		}
 	}
 	
 	/**
-	 * 
 	 * @param world
 	 * @param x
 	 * @param y
 	 * @param z
-	 * @param depth
 	 * @param searchForId
 	 * @return
 	 */
-	private int isBlockBeneath(World world, Location loc, int depth, int searchForId) {
-		int yDepth = loc.getY() - depth;
-		for( int ySearch = loc.getY(); ySearch >= yDepth; ySearch--) {
-			Block block = world.getBlock(loc.getX(), ySearch, loc.getZ());
-        	int blockId = Block.getIdFromBlock(block);
-            if (blockId == searchForId) {
-                return Math.abs(loc.getY() - ySearch);
-             }
-		}
-		return -1;
-	}
-	
-	private class Location {
-		private int x, y, z;
-		private Location(Entity entity) {
-			x = MathHelper.floor_double(entity.posX);
-			y = MathHelper.floor_double(entity.posY - 0.20000000298023224D);
-			z = MathHelper.floor_double(entity.posZ);
-		}
-		
-		/**
-		 * @return the x
-		 */
-		public int getX() {
-			return x;
-		}
-		
-		/**
-		 * @return the y
-		 */
-		public int getY() {
-			return y;
-		}
-		
-		/**
-		 * @return the z
-		 */
-		public int getZ() {
-			return z;
-		}
+	private int detectBlock(World world, int x, int y, int z, int searchForId) {
+		int yDepth = y - (depth);
+		for( int ySearch = y; ySearch >= yDepth; ySearch--) {
+			for (int xSearch = x - radius; xSearch <= x + radius; xSearch++) {
+				for (int zSearch = z - radius; zSearch <= z + radius; zSearch++) {
+	            	Block block = world.getBlock(xSearch, ySearch, zSearch);
+	            	int blockId = Block.getIdFromBlock(block);
+	                if (blockId == searchForId) {
+	                	return Math.abs(y - ySearch);
+	                 }
+	            }
+	        }
+	    }
+	    return -1;
 	}
 	
 }
